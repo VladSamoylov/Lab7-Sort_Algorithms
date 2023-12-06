@@ -6,7 +6,8 @@ using namespace std;
 
 
 void ShowPriceDetail(int* mas, int* n);
-//int CheckIntValue(int* i);
+int CheckIntValue(int* i);
+int CheckMinMembersOfOrder(int* n);
 
 /**
  * @brief Перевіряє коректне значення типу int, яке ввів користувач до системи
@@ -58,74 +59,106 @@ int GetRandomNumber(int n) {
 	return random;
 }
 
+/**
+ * @brief Реалізація алгоритму сортування бульбашкою для змінних типу int
+ * @param mas Масив типу int, який потрібно відсортувати
+ * @param n Кількість елементів масиву
+*/
 void BubbleSort(int* mas, int* n) {
 	int buf;
-	
+	int length = *n;
+
 	cout << "Bubble Sorting is in progress..." << endl;
-	for (int i = 0; i < *n; i++) {
-		for (int j = 0; j < *n - 1; j++) {
-			if (mas[j] > mas[j + 1]) {
-				buf = mas[j];
-				mas[j] = mas[j + 1];
-				mas[j + 1] = buf;
+	while (length != 0) {
+		int max_index = 0;
+		for (int i = 0; i < length - 1; i++) {
+			if (mas[i] > mas[i + 1]) {
+				buf = mas[i];
+				mas[i] = mas[i + 1];
+				mas[i + 1] = buf;
+				max_index = i + 1;
 			}
 		}
+		length = max_index;
 	}	
 }
 
+/**
+ * @brief Реалізація алгоритму сортування бульбашкою для змінних типу float
+ * @param mas Масив типу float, який потрібно відсортувати
+ * @param n Кількість елементів масиву
+*/
 void BubbleSort(float* mas, int* n) {
 	float buf;
+	int length = *n;
 
 	cout << "Bubble Sorting is in progress..." << endl;
-	for (int i = 0; i < *n; i++) {
-		for (int j = 0; j < *n - 1; j++) {
-			if (mas[j] > mas[j + 1]) {
-				buf = mas[j];
-				mas[j] = mas[j + 1];
-				mas[j + 1] = buf;
+	while (length != 0) {
+		int max_index = 0;
+		for (int i = 0; i < length - 1; i++) {
+			if (mas[i] > mas[i + 1]) {
+				buf = mas[i];
+				mas[i] = mas[i + 1];
+				mas[i + 1] = buf;
+				max_index = i + 1;
 			}
 		}
+		length = max_index;
 	}
 }
 
+/**
+ * @brief Реалізація алгоритму сортування бульбашкою для змінних типу char
+ * @param mas Масив типу char, який потрібно відсортувати
+ * @param n Кількість елементів масиву
+*/
 void BubbleSort(char* mas, int* n) {
 	char buf;
+	int length = *n;
 
 	cout << "Bubble Sorting is in progress..." << endl;
-	for (int i = 0; i < *n; i++) {
-		for (int j = 0; j < *n - 1; j++) {
-			if ((int)mas[j] > (int)mas[j + 1]) {
-				buf = mas[j];
-				mas[j] = mas[j + 1];
-				mas[j + 1] = buf;
+	while (length != 0) {
+		int max_index = 0;
+		for (int i = 0; i < length - 1; i++) {
+			if (mas[i] > mas[i + 1]) {
+				buf = mas[i];
+				mas[i] = mas[i + 1];
+				mas[i + 1] = buf;
+				max_index = i + 1;
 			}
 		}
+		length = max_index;
 	}
 }
 
+/**
+ * @brief Реалізація алгоритму сортування вибором для змінних типу int
+ * @param mas Масив типу int, який потрібно відсортувати
+ * @param n Кількість елементів масиву
+*/
 void ChoiceSort(int* mas, int* n) {
-	int min = 10000000000;
-	int index;
-	bool find = false;
 
 	cout << "Choice Sorting is in progress..." << endl;
 	for (int i = 0; i < *n - 1; i++) {
-		for (int j = i; j < *n; j++) {
-			if (min > mas[j]) {
-				min = mas[j];
-				index = j;
-				find = true;
+		int min_index = i;
+		for (int j = i + 1; j < *n; j++) {
+			if (mas[min_index] > mas[j]) {
+				min_index = j;				
 			}
 		}
-		if (find) {
-			mas[index] = mas[i];
-			mas[i] = min;
-			find = false;
-			min = 10000000000;
+		if (min_index != i) {
+			int buf = mas[min_index];
+			mas[min_index] = mas[i];
+			mas[i] = buf;
 		}		
 	}
 }
 
+/**
+ * @brief Реалізація алгоритму сортування підрахунком для змінних типу int
+ * @param mas Масив типу int, який потрібно відсортувати
+ * @param n Кількість елементів масиву
+*/
 void CountingSort(int* mas, int* n) {
 	int count = 0;
 	int max_value = 110000;
@@ -153,6 +186,13 @@ void CountingSort(int* mas, int* n) {
 	delete[] count_mas;
 }
 
+/**
+ * @brief Реалізація злиття двох частин з low_index до middle_index і middle_index + 1 до high_index
+ * @param mas Масив типу int, який потрібно відсортувати
+ * @param low_index Мінімальний індекс
+ * @param middle_index Середній індекс
+ * @param high_index Максимальний індекс
+*/
 void Merge(int* mas, int low_index, int middle_index, int high_index) {
 	int left = low_index;
 	int right = middle_index + 1;
@@ -161,9 +201,7 @@ void Merge(int* mas, int low_index, int middle_index, int high_index) {
 	for (int i = 0; i < (high_index - low_index + 1); i++) {
 		buf_mas[i] = 0;
 	}
-
 	int index = 0;
-
 	while ((left <= middle_index) && (right <= high_index)) {
 		if (mas[left] < mas[right]) {
 			buf_mas[index] = mas[left];
@@ -183,33 +221,37 @@ void Merge(int* mas, int low_index, int middle_index, int high_index) {
 		buf_mas[index] = mas[i];
 		index++;
 	}
-	
 	for (int i = 0; i < (high_index - low_index + 1); i++) {
 		mas[low_index + i] = buf_mas[i];
 	}
 
 	delete[] buf_mas;
-
 }
 
+/**
+ * @brief Реалізація алгоритму сортування злиттям для змінних типу int
+ * @param mas Масив типу int, який потрібно відсортувати
+ * @param low_index Мінімальний індекс масиву
+ * @param high_index Максимальний індекс масиву
+*/
 void MergeSort(int* mas, int low_index, int high_index) {
 	
 	if (high_index - low_index < 1) {
 		return;
 	}
 	int middle_index = (low_index + high_index) / 2;
-	if (high_index - low_index > 1) {
-		
-		
+	if (high_index - low_index > 1) {			
 		MergeSort(mas, low_index, middle_index);
-		MergeSort(mas, middle_index + 1, high_index);
-		
-		
-		
+		MergeSort(mas, middle_index + 1, high_index);	
 	}
 	Merge(mas, low_index, middle_index, high_index);
 }
 
+/**
+ * @brief Реалізація алгоритму сортування вибором для змінних типу int
+ * @param mas Масив типу int, який потрібно відсортувати
+ * @param n Кількість елементів масиву
+*/
 void InsertSort(int* mas, int n) {
 	int buf;
 
@@ -225,70 +267,74 @@ void InsertSort(int* mas, int n) {
 	}
 }
 
+/**
+ * @brief Реалізація алгоритму сортування Шелла для змінних типу int
+ * @param mas Масив типу int, який потрібно відсортувати
+ * @param n Кількість елементів масиву
+*/
 void ShellSort(int* mas, int* n) {
 	int buf;
 
 	cout << "Shell Sorting is in progress..." << endl;
 	for (int step = *n / 2; step > 0; step /= 2) {
 		for (int i = step; i < *n; i++) {
-			int k = 0;
-			for (int j = i; j >= step; j -= step) {
-				if (mas[i - k] < mas[j - step]) {
-					buf = mas[i - k];
-					mas[i - k] = mas[j - step];
-					mas[j - step] = buf;
-					//cout << " ------Work----------" << step << endl;
-					//ShowPriceDetail(mas, n);
-					k++;
-				}
+			buf = mas[i];
+			int j;
+			for (j = i; j >= step && buf < mas[j - step]; j -= step) {
+				mas[j] = mas[j - step];
 			}
+			mas[j] = buf;
 		}
 	}	
 }
 
+/**
+ * @brief Реалізація алгоритму сортування Шелла для змінних типу float
+ * @param mas Масив типу float, який потрібно відсортувати
+ * @param n Кількість елементів масиву
+*/
 void ShellSort(float* mas, int* n) {
 	float buf;
 
 	cout << "Shell Sorting is in progress..." << endl;
 	for (int step = *n / 2; step > 0; step /= 2) {
 		for (int i = step; i < *n; i++) {
-			int k = 0;
-			for (int j = i; j >= step; j -= step) {
-				if (mas[i - k] < mas[j - step]) {
-					buf = mas[i - k];
-					mas[i - k] = mas[j - step];
-					mas[j - step] = buf;
-					//cout << " ------Work----------" << step << endl;
-					//ShowPriceDetail(mas, n);
-					k++;
-				}
+			buf = mas[i];
+			int j;
+			for (j = i; j >= step && buf < mas[j - step]; j -= step) {
+				mas[j] = mas[j - step];
 			}
+			mas[j] = buf;
 		}
 	}
 }
 
+/**
+ * @brief Реалізація алгоритму сортування Шелла для змінних типу char
+ * @param mas Масив типу char, який потрібно відсортувати
+ * @param n Кількість елементів масиву
+*/
 void ShellSort(char* mas, int* n) {
 	char buf;
 
 	cout << "Shell Sorting is in progress..." << endl;
 	for (int step = *n / 2; step > 0; step /= 2) {
 		for (int i = step; i < *n; i++) {
-			int k = 0;
-			for (int j = i; j >= step; j -= step) {
-				if ((int)mas[i - k] < (int)mas[j - step]) {
-					buf = mas[i - k];
-					mas[i - k] = mas[j - step];
-					mas[j - step] = buf;
-					//cout << " ------Work----------" << step << endl;
-					//ShowPriceDetail(mas, n);
-					k++;
-				}
+			buf = mas[i];
+			int j;
+			for (j = i; j >= step && buf < mas[j - step]; j -= step) {
+				mas[j] = mas[j - step];
 			}
+			mas[j] = buf;
 		}
 	}
 }
 
-
+/**
+ * @brief Відображає дані, які містяться в масиві типу int
+ * @param mas Масив типу int
+ * @param n Кількість елементів масиву
+*/
 void ShowPriceDetail(int* mas, int* n) {
 
 	for (int i = 0; i < *n; i++) {
@@ -296,18 +342,33 @@ void ShowPriceDetail(int* mas, int* n) {
 	} cout << endl;
 }
 
+/**
+ * @brief Відображає дані, які містяться в масиві типу float
+ * @param mas Масив типу float
+ * @param n Кількість елементів масиву
+*/
 void ShowPriceDetail(float* mas, int* n) {
 	for (int i = 0; i < *n; i++) {
 		cout << *(mas + i) << "$| ";
 	} cout << endl;
 }
 
+/**
+ * @brief Відображає дані, які містяться в масиві типу char
+ * @param mas Масив типу char
+ * @param n Кількість елементів масиву
+*/
 void ShowPriceDetail(char* mas, int* n) {
 	for (int i = 0; i < *n; i++) {
 		cout << *(mas + i) << " | ";
 	} cout << endl;
 }
 
+/**
+ * @brief Шукає середнє значення вартості автомобілів за сортуванням
+ * @param car_price Масив типу int, який містить в собі перелік цін
+ * @param n Кількість елементів масиву
+*/
 void FindMiddlePriceOfCars(int* car_price, int* n) {
 	float middle_price = 0;
 	int* insert_mas = new int[*n];
@@ -315,6 +376,7 @@ void FindMiddlePriceOfCars(int* car_price, int* n) {
 	int* counting_mas = new int[*n];
 	int* merge_mas = new int[*n];
 	int* shell_mas = new int[*n];
+	int* test_mas = new int[*n];
 
 	for (int i = 0; i < *n; i++) {
 		car_price[i] = 10000 + GetRandomNumber(100000);
@@ -332,6 +394,7 @@ void FindMiddlePriceOfCars(int* car_price, int* n) {
 	copy(car_price, car_price + *n, counting_mas);
 	copy(car_price, car_price + *n, merge_mas);
 	copy(car_price, car_price + *n, shell_mas);
+	copy(car_price, car_price + *n, test_mas);
 	
 
 	auto start_bubble = chrono::high_resolution_clock::now();
@@ -364,14 +427,19 @@ void FindMiddlePriceOfCars(int* car_price, int* n) {
 	auto stop_shell = chrono::high_resolution_clock::now();
 	auto dur_shell = chrono::duration_cast<chrono::milliseconds>(stop_shell - start_shell);
 
+	auto start_test = chrono::high_resolution_clock::now();
+	//shellSort(test_mas, n);
+	auto stop_test = chrono::high_resolution_clock::now();
+	auto dur_test = chrono::duration_cast<chrono::milliseconds>(stop_test - start_test);
+
 	cout << "-------------Sort MAS---------------" << endl;
 	//ShowPriceDetail(car_price, n);
 	//ShowPriceDetail(insert_mas, n);
-	//ShowPriceDetail(test_mas, n);
 	//ShowPriceDetail(choice_mas, n);
 	//ShowPriceDetail(counting_mas, n);
 	//ShowPriceDetail(merge_mas, n);
 	//ShowPriceDetail(shell_mas, n);
+	//ShowPriceDetail(test_mas, n);
 	cout << "\nAmount: " << middle_price << endl;
 	cout << "\nMiddle Price of Cars: " << middle_price / *n << "$\n";
 	cout << "Middle Price of Cars by bubble sort: " << car_price[*n / 2 - 1] << "$ sort speed: " << (float)dur_bubble.count() / 1000 << " seconds " << endl;
@@ -380,6 +448,7 @@ void FindMiddlePriceOfCars(int* car_price, int* n) {
 	cout << "Middle Price of Cars by counting sort: " << counting_mas[*n / 2 - 1] << "$ sort speed: " << (float)dur_counting.count() / 1000 << " seconds " << endl;
 	cout << "Middle Price of Cars by merge sort: " << merge_mas[*n / 2 - 1] << "$ sort speed: " << (float)dur_merge.count() / 1000 << " seconds " << endl;
 	cout << "Middle Price of Cars by shell sort: " << shell_mas[*n / 2 - 1] << "$ sort speed: " << (float)dur_shell.count() / 1000 << " seconds " << endl;
+	cout << "Middle Price of Cars by test sort: " << test_mas[*n / 2 - 1] << "$ sort speed: " << (float)dur_test.count() / 1000 << " seconds " << endl;
 	cout << "The dif btw the average cost cars and the cost of the cars by sorting: " << abs((middle_price / *n) - car_price[*n / 2 - 1]) << "$\n";
 	
 	delete[] insert_mas;
@@ -387,8 +456,13 @@ void FindMiddlePriceOfCars(int* car_price, int* n) {
 	delete[] counting_mas;
 	delete[] merge_mas;
 	delete[] shell_mas;
+	delete[] test_mas;
 }
 
+/**
+ * @brief Сортуває масиви типу float і char
+ * @param n Кількість елементів масиву
+*/
 void SortingDataMassive(int* n) {
 	float* float_data = new float[*n];
 	float* float_data_copy = new float[*n];
@@ -428,10 +502,10 @@ void SortingDataMassive(int* n) {
 	auto dir_cshell = chrono::duration_cast<chrono::milliseconds>(end_cshell - start_cshell);
 
 	cout << "-------------Sort MAS---------------" << endl;
-	/*/ShowPriceDetail(float_data, n);
-	ShowPriceDetail(float_data_copy, n);
-	ShowPriceDetail(char_data, n);
-	ShowPriceDetail(char_data_copy, n);*/
+	//ShowPriceDetail(float_data, n);
+	//ShowPriceDetail(float_data_copy, n);
+	//ShowPriceDetail(char_data, n);
+	//ShowPriceDetail(char_data_copy, n);
 	cout << "Sorting: " << *n << " float data by bubble sort takes -> " << (float)dir_fbubble.count() / 1000 << " seconds" << endl;
 	cout << "Sorting: " << *n << " float data by shell sort takes -> " << (float)dir_fshell.count() / 1000 << " seconds" << endl;
 	cout << "Sorting: " << *n << " char data by bubble sort takes -> " << (float)dir_cbubble.count() / 1000 << " seconds" << endl;
