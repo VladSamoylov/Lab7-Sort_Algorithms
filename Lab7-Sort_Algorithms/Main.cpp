@@ -4,7 +4,6 @@
 
 using namespace std;
 
-
 void ShowPriceDetail(int* mas, int* n);
 int CheckIntValue(int* i);
 int CheckMinMembersOfOrder(int* n);
@@ -248,7 +247,7 @@ void MergeSort(int* mas, int low_index, int high_index) {
 }
 
 /**
- * @brief Реалізація алгоритму сортування вибором для змінних типу int
+ * @brief Реалізація алгоритму сортування вставками для змінних типу int
  * @param mas Масив типу int, який потрібно відсортувати
  * @param n Кількість елементів масиву
 */
@@ -448,7 +447,7 @@ void FindMiddlePriceOfCars(int* car_price, int* n) {
 	cout << "Middle Price of Cars by counting sort: " << counting_mas[*n / 2 - 1] << "$ sort speed: " << (float)dur_counting.count() / 1000 << " seconds " << endl;
 	cout << "Middle Price of Cars by merge sort: " << merge_mas[*n / 2 - 1] << "$ sort speed: " << (float)dur_merge.count() / 1000 << " seconds " << endl;
 	cout << "Middle Price of Cars by shell sort: " << shell_mas[*n / 2 - 1] << "$ sort speed: " << (float)dur_shell.count() / 1000 << " seconds " << endl;
-	cout << "Middle Price of Cars by test sort: " << test_mas[*n / 2 - 1] << "$ sort speed: " << (float)dur_test.count() / 1000 << " seconds " << endl;
+	//cout << "Middle Price of Cars by test sort: " << test_mas[*n / 2 - 1] << "$ sort speed: " << (float)dur_test.count() / 1000 << " seconds " << endl;
 	cout << "The dif btw the average cost cars and the cost of the cars by sorting: " << abs((middle_price / *n) - car_price[*n / 2 - 1]) << "$\n";
 	
 	delete[] insert_mas;
@@ -460,7 +459,7 @@ void FindMiddlePriceOfCars(int* car_price, int* n) {
 }
 
 /**
- * @brief Сортуває масиви типу float і char
+ * @brief Сортує масиви типу float і char
  * @param n Кількість елементів масиву
 */
 void SortingDataMassive(int* n) {
@@ -557,7 +556,6 @@ void MenuOfSolution(int* q) {
 int main() {
 	int q;
 
-	cout << "\nCreated by Vladislav Samoilov / KNT - 223\n";
 	cout << "--------Select task:--------\n";
 	cout << "Task A) Find Middle Price Of Cars - Enter 1\n";
 	cout << "Task C) Sorting massive data - Enter 2\n";
